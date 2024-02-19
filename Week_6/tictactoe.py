@@ -6,39 +6,42 @@ n = 0      # Size of the Tic Tac Toe board (n x n)
 nodes = 0  # Counter for the number of nodes explored during the minimax search
 
 # Function to evaluate the current state of the board
+# Function to evaluate the current state of the Tic Tac Toe board
 def evaluateBoard(board):
-    global n
-    # Checking for rows
+    global n  # Access the size of the board defined globally
+    
+    # Checking for winning conditions in rows
     for i in range(n):
-        res = 0
+        res = 0  # Initialize the sum for each row
         for j in range(n):
-            res += board[i * n + j] 
-        if res == n:   # Player wins
-            return 1
-        elif res == -n:  # AI wins
-            return -1
+            res += board[i * n + j]  # Add the values in each row
+        if res == n:   # If sum equals n, player wins
+            return 1  # Return 1 indicating player wins
+        elif res == -n:  # If sum equals -n, AI wins
+            return -1  # Return -1 indicating AI wins
         
-    # Checking for columns
+    # Checking for winning conditions in columns
     for i in range(n):
-        res = 0
+        res = 0  # Initialize the sum for each column
         for j in range(n):
-            res += board[i + n * j]
-        if res == n:
-            return 1
-        elif res == -n:
-            return -1
+            res += board[i + n * j]  # Add the values in each column
+        if res == n:  # If sum equals n, player wins
+            return 1  # Return 1 indicating player wins
+        elif res == -n:  # If sum equals -n, AI wins
+            return -1  # Return -1 indicating AI wins
             
-    # Checking for diagonals
-    res = res2 = 0
+    # Checking for winning conditions in diagonals
+    res = res2 = 0  # Initialize sums for both diagonals
     for i in range(n):
-        res += board[i * (n + 1)]   
-        res2 += board[(i + 1) * (n - 1)]
-    if n in [res, res2]:
-        return 1
-    elif -n in [res, res2]:
-        return -1
+        res += board[i * (n + 1)]   # Add values in the main diagonal
+        res2 += board[(i + 1) * (n - 1)]  # Add values in the secondary diagonal
+    if n in [res, res2]:  # If any diagonal sum equals n, player wins
+        return 1  # Return 1 indicating player wins
+    elif -n in [res, res2]:  # If any diagonal sum equals -n, AI wins
+        return -1  # Return -1 indicating AI wins
 
-    return 0
+    return 0  # If no winning conditions are met, return 0 indicating the game is still ongoing
+
     
 # Function to check if the game is still ongoing
 def checkNonTerminal(board):
@@ -47,14 +50,20 @@ def checkNonTerminal(board):
            return 1
    return 0
 
+
 # Function to assign a score to a board configuration
 def getScore(board, depth):
-    if evaluateBoard(board) == 1:
+    # Check if the current board configuration leads to a win for either player
+    if evaluateBoard(board) == 1:  # If player wins
+        # Return a positive score, giving more weight to wins achieved in fewer steps
         return 10 - depth
-    elif evaluateBoard(board) == -1:
+    elif evaluateBoard(board) == -1:  # If AI wins
+        # Return a negative score, penalizing wins achieved in more steps
         return depth - 10
     else:
+        # If the game is not won by either player (draw), return a neutral score
         return 0
+
 
 # Minimax algorithm for AI decision making
 def minimax(board, turn, depth):
