@@ -20,3 +20,17 @@ class Perceptron:
         summation = np.dot(input, self.weights) + self.bias
         #Apply step function to determin e output (0 or 1)
         return self.step_function(summation)
+    
+    def train(self, training_inputs, labels, epochs):
+        # Training method to adjust weights based on error
+        for epoch in range(epochs):
+            # Iterate over each training eample
+            for inputs, label in zip(training_inputs, labels):
+                # Make prediction  using curent weights
+                prediction = self.predict(inputs)
+                #Update weights based on prediction eror
+                self.weights = self.weights + self.learning_rate * (label - prediction) * inputs
+                self.bias += self.learning_rate * (label - prediction)
+
+
+                
