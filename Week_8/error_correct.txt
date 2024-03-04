@@ -1,0 +1,7 @@
+ef fit(self, X, d):
+        for _ in range(self.epochs):
+            for i in range(d.shape[0]):
+                x = np.insert(X[i], 0, 1)
+                y = self.predict(x)
+                e = d[i] - y
+                self.W = self.W + self.lr * e * x

@@ -1,0 +1,7 @@
+class Perceptron(object):
+    """Implements a perceptron network"""
+    def __init__(self, input_size, lr=1, epochs=5):
+        self.W = np.zeros(input_size+1)
+        # add one for bias
+        self.epochs = epochs
+        self.lr = lr

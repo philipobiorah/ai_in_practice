@@ -1,0 +1,4 @@
+def predict(self, x):
+        z = self.W.T.dot(x)
+        a = self.activation_fn(z)
+        return a
